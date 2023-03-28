@@ -15,9 +15,8 @@ module.exports = class TaskController {
       description: req.body.description, 
       done: false
     }
-
-    // validaçoes
-    //processar dados
+    // 1  -  validaçoes
+    // 2 - processar dados
 
     // function para  o method post 
     await Task.create(task);
@@ -25,10 +24,29 @@ module.exports = class TaskController {
     res.redirect('/tasks');
 
   }
+ 
+  // method de remoçao 
+
+  static async removeTask( req , res ) {
+    
+    const id = req.body.id; 
+
+    await Task.destroy({ where : { id : id } }); 
+     
+    res.redirect('/tasks');
+
+  }
 
   // renderizar outra pagina pagina tasks/all 
-  static showTasks(  req , res) {
-     res.render('tasks/all');
+  static async showTasks(  req , res) {
+
+  
+   const tasks = await Task.findAll({ raw: true })
+
+
+     res.render('tasks/all', { tasks });
   }
+
 }
+
 
