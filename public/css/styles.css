@@ -91,6 +91,14 @@ form input[type='submit'] {
   color: #333;
 }
 
+/* task done  */
+.title.done {
+  text-decoration: line-through;
+  color: #ccc;
+  
+}
+
+
 .actions {
   display: flex;
 }
@@ -114,3 +122,9 @@ form input[type='submit'] {
   border: none;
   cursor: pointer;
 }
+
+
+
+
+
+

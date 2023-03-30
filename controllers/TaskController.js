@@ -37,6 +37,57 @@ module.exports = class TaskController {
 
   }
 
+
+  static async updateTask( req , res) {
+     
+    const id = req.params.id
+             
+    const task = await Task.findOne({ where: { id: id }, raw: true })
+
+    res.render('tasks/edit', { task })
+
+  }
+
+
+  static async updateTaskPost( req , res ) {
+     
+   try {
+     
+    const id = req.body.id; 
+  
+    const task = {
+       title: req.body.title,
+       description: req.body.description
+    } 
+ 
+    await Task.update(task, { where: { id : id } })
+ 
+  
+    res.redirect('/tasks'); 
+ 
+
+   } catch (error) {
+     
+    console.log(error);
+
+   }
+     
+  }
+
+  static async toggleTaskStatus( req , res ) {
+
+    const id = req.body.id; 
+
+    const task = { 
+      done: req.body.done === '0' ? true : false,
+    }
+
+    await Task.update(task,  { where : { id: id } })
+ 
+    res.redirect('/tasks');
+
+  }
+
   // renderizar outra pagina pagina tasks/all 
   static async showTasks(  req , res) {
 
@@ -48,5 +99,4 @@ module.exports = class TaskController {
   }
 
 }
-
 
